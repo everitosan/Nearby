@@ -11,6 +11,7 @@ router
   .put("/user/:id", Users.putUser)
   .delete("/user/:id", Users.disableUser)
   .delete("/user/remove/:id", Users.deleteUser)
+  .post("/user/:id/createRequest/", Users.createRequest)
   .delete("/user/:id/removeRequest/:id_request", Users.deleteRequest);
 
 router

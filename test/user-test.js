@@ -179,6 +179,31 @@ describe("Users", ()=>{
     });
   });
 
+  describe("/POST create a request", ()=>{
+    it("it should create a request and assign it to a user", (done)=>{
+
+      let mRequest = {
+        article: "Tennis",
+        description: "Necesito unos tennis nuevos del número 7.5"
+      };
+
+      chai.request(server)
+        .post("/api/user/"+fId+"/createRequest")
+        .send(mRequest)
+        .then((res)=>{
+          res.should.have.status(201);
+          res.body.should.be.a("object");
+          res.body.should.have.property("_id");
+          res.body.should.have.property("finished");
+          res.body.finished.should.equal(false);
+          done();
+        })
+        .catch((err)=>{
+          done(err);
+        });
+    });
+  });
+
   describe("/DELETE  a request", ()=>{
     it("it should detele a Request from a user", (done)=>{
 

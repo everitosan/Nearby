@@ -109,6 +109,34 @@ const Users = {
       .catch((err)=>{
         returnError(err, res);
       });
+  },
+
+  createRequest: function(req, res) {
+    let user;
+    let nReq;
+
+    Models.User.findById(req.params.id)
+      .then((userDoc) => {
+        if(userDoc === null) throw new Error("User not found");
+        user = userDoc;
+        let {article, description} = req.body;
+        let requestInfo = {article, description};
+
+        let newRequest = new Models.Request(requestInfo);
+
+        return newRequest.save()
+      })
+      .then((doc) => {
+        nReq = doc;
+        user.requests.push(doc);
+        return user.save()
+      })
+      .then((doc)=>{
+        res.status(201).json(nReq);
+      })
+      .catch((err) => {
+        returnError(err, res);
+      });
   }
 
 }
