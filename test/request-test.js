@@ -87,9 +87,9 @@ describe("Requests", ()=>{
     it("it should create a Request and attach it to a user", (done) => {
 
       let abril = new User({
-        "showId": 32433724,
+        "showId": 32430724,
         "name": "abril",
-        "email": "abril@abril.com",
+        "email": "abril@go.com",
         "picture":"onePic"
       });
 
@@ -170,26 +170,6 @@ describe("Requests", ()=>{
         });
     });
   });
-
-  describe("/DELETE  a request", ()=>{
-    it("it should detele a Request", (done)=>{
-
-      chai.request(server)
-        .delete("/api/request/remove/"+fId)
-        .then((res)=>{
-        
-          res.should.have.status(200);
-          res.should.be.a("object");
-          res.body.should.have.property("deleted");
-          done();
-        
-        })
-        .catch((err)=>{
-          done(err);
-        });
-    });
-  });
-
 
 
 });

@@ -45,7 +45,7 @@ const Request = {
         res.status(201).json(nReq);
       })
       .catch((err) => {
-        returnError(err);
+        returnError(err, res);
       });
   },
 
@@ -72,20 +72,6 @@ const Request = {
       })
       .then((doc)=>{
         res.json(doc);
-      })
-      .catch((err)=>{
-        returnError(err, res)
-      });
-  },
-
-  deleteRequest: function(req, res) {
-    Models.Request.findById(req.params.id)
-      .then((doc)=>{
-        if(doc === null) throw new Error("Request not found");
-        return Models.Request.remove(doc);
-      })
-      .then((doc)=>{
-        res.json({"deleted": true});
       })
       .catch((err)=>{
         returnError(err, res)

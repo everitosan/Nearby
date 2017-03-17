@@ -82,8 +82,41 @@ const Users = {
       .catch((err)=>{
         returnError(err, res);
       });
+  },
+
+  deleteRequest: function(req, res) {
+
+    let user;
+
+    Models.User.findById(req.params.id)
+      .then((doc)=>{
+        if(doc === null) throw new Error("User not found"); 
+        let reqPos = doc.requests.find(findRequest, req.params.id_request);
+        if(reqPos === undefined) throw new Error("Request not found");
+        doc.requests.splice(reqPos.index, 1);
+        return doc.save()
+      })
+      .then((doc)=>{
+        return  Models.Request.findById(req.params.id_request)
+      })
+      .then((doc)=>{
+        if(doc === null) throw new Error("Request not found");
+        return Models.Request.remove(doc);
+      })
+      .then((doc)=>{
+        res.json({"deleted": true});
+      })
+      .catch((err)=>{
+        returnError(err, res);
+      });
   }
 
+}
+
+function findRequest(curReq, index){
+  if (curReq == this) {
+    return {"index": index}
+  }
 }
 
 

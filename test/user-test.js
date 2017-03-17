@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import chai from "chai";
 import chaiHttp from "chai-http";
 import User from "../src/server/lib/models/User";
+import Request from "../src/server/lib/models/Request";
 
 let server = require("../src/server/lib");
 let should = chai.should();
@@ -173,6 +174,45 @@ describe("Users", ()=>{
         
         })
         .catch((err)=>{
+          done(err);
+        });
+    });
+  });
+
+  describe("/DELETE  a request", ()=>{
+    it("it should detele a Request from a user", (done)=>{
+
+      let r2 = new Request({
+        article: "Tasa de peltre",
+        description: "Necesito una tasa de peltre pequeña"
+      });
+
+      let abril;
+      let abrilRequest;
+
+      User.find({"_id": fId})
+        .then((doc)=>{
+          abril = doc[0];
+          return r2.save()
+        })
+        .then((doc)=>{
+          abril.requests.push(doc);
+          abrilRequest = doc._id.toString();
+          return abril.save();
+        })
+        .then((doc)=>{
+          let apiUrl  = "/api/user/"+fId+"/removeRequest/"+abrilRequest;
+          console.log(apiUrl);
+          return chai.request(server).delete(apiUrl);
+        })
+        .then((res)=>{
+          res.should.have.status(200);
+          res.should.be.a("object");
+          res.body.should.have.property("deleted");
+          abril.requests.length.should.equal(0);
+          done();
+        })
+        .catch((err)=> {
           done(err);
         });
     });
