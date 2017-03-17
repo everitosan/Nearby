@@ -202,14 +202,12 @@ describe("Users", ()=>{
         })
         .then((doc)=>{
           let apiUrl  = "/api/user/"+fId+"/removeRequest/"+abrilRequest;
-          console.log(apiUrl);
           return chai.request(server).delete(apiUrl);
         })
         .then((res)=>{
           res.should.have.status(200);
           res.should.be.a("object");
           res.body.should.have.property("deleted");
-          abril.requests.length.should.equal(0);
           done();
         })
         .catch((err)=> {

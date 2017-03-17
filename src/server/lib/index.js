@@ -14,7 +14,7 @@ app.use(express.static("public"));
 
 if(process.env.NODE_ENV != "deploy") console.log(DB_URI);
 
-if(process.env.NODE_ENV === "test") app.use(morgan("tiny"));
+if(process.env.NODE_ENV === "dev") app.use(morgan("tiny"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
