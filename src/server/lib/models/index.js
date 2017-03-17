@@ -1,9 +1,9 @@
 import UserSchema from "./User";
-import RequirementSchema from "./Requirement";
+import RequestSchema from "./Request";
 
 let models = {
   User: UserSchema,
-  Requirement: RequirementSchema
+  Request: RequestSchema
 };
 
 

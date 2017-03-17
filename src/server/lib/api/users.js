@@ -5,7 +5,7 @@ const Users = {
 
   allUsers : function(req, res) {
       
-    Models.User.find({})
+    Models.User.find({active: true})
       .then((docs)=>{
         res.json(docs);
       })

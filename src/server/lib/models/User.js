@@ -7,7 +7,7 @@ let UserSchema = new mongoose.Schema({
   email: {type: String, unique: true, required: true},
   picture: {type: String, required: true},
   telephone: {type: String},
-  requeriments: [ Schema.Types.ObjectId ],
+  requests: [ Schema.Types.ObjectId ],
   offers: [ Schema.Types.ObjectId ],
   active: {type: Boolean, default: true}
 });

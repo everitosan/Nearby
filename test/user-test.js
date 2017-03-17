@@ -28,7 +28,8 @@ describe("Users", ()=>{
       "showId": 3243724,
       "name": "everitosan",
       "email": "roockf@hotmail.com",
-      "picture":"dasdasd"
+      "picture":"dasdasd",
+      "active": false
     }); 
 
     User.remove({}, (err)=>{
@@ -55,7 +56,9 @@ describe("Users", ()=>{
         .then((res)=>{
           res.should.have.status(200);
           res.body.should.be.a("array");
+          res.body[0].should.have.property("name");
           res.body[0].name.should.equal('abril');
+          res.body.length.should.equal(1);
           done();
         })
         .catch((err)=>{
@@ -104,7 +107,9 @@ describe("Users", ()=>{
           body.should.be.a("object");
           body.should.have.property("_id");
           body.should.have.property("offers");
-          body.should.have.property("requeriments");
+          body.offers.should.be.a("array");
+          body.should.have.property("requests");
+          body.requests.should.be.a("array");
           done();
         })
     
