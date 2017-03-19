@@ -35,6 +35,9 @@ const Users = {
   
   getUser: function(req, res) {
     Models.User.findById(req.params.id)
+      .populate("requests")
+      .populate("offers")
+      .exec()
       .then( (doc)=> {
         res.json(doc);
       })

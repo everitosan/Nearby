@@ -15,6 +15,8 @@ const Request = {
   },
   getRequest: function(req, res) {
     Models.Request.findById(req.params.id)
+      .populate("offers")
+      .exec()
       .then((doc)=> {
         if(doc === null) throw new Error("Request not found");
         res.json(doc);
