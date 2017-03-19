@@ -6,8 +6,8 @@ let Request = new mongoose.Schema({
   description: {type: String, required: true},
   date: {type: Date, default: Date.now},
   finished: {type: Boolean, default: false},
+  active: {type: Boolean, default: true},
   offers: [ Schema.Types.ObjectId ],
-  active: {type: Boolean, default: true}
 });
 
 export default mongoose.model("Request", Request);

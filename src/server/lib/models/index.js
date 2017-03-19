@@ -1,9 +1,11 @@
 import UserSchema from "./User";
 import RequestSchema from "./Request";
+import OfferSchema from "./Offer";
 
 let models = {
   User: UserSchema,
-  Request: RequestSchema
+  Request: RequestSchema,
+  Offer: OfferSchema
 };
 
 

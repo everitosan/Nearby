@@ -1,5 +1,5 @@
 import Models from "../models";
-import returnError from "./Error";
+import returnError from "./error";
 
 const Users = {
 
@@ -91,9 +91,9 @@ const Users = {
     Models.User.findById(req.params.id)
       .then((doc)=>{
         if(doc === null) throw new Error("User not found"); 
-        let reqPos = doc.requests.find(findRequest, req.params.id_request);
-        if(reqPos === undefined) throw new Error("Request not found");
-        doc.requests.splice(reqPos.index, 1);
+        let reqPos = doc.requests.findIndex(findDocInArray, req.params.id_request);
+        if(reqPos === undefined) throw new Error("Request not found in user");
+        doc.requests.splice(reqPos, 1);
         return doc.save()
       })
       .then((doc)=>{
@@ -137,14 +137,78 @@ const Users = {
       .catch((err) => {
         returnError(err, res);
       });
+  },
+
+  createOffer: function(req, res) {
+    let userD, reqD, offerD;
+    Models.User.findById(req.params.id)
+      .then((userDoc)=>{
+        if(userDoc === null) throw new Error("User not found");
+        userD = userDoc;
+        return Models.Request.findById(req.params.id_request);
+      })
+      .then((reqDoc)=>{
+        if(reqDoc === null) throw new Error("Request not found in user");
+        reqD = reqDoc;
+        let {price, image} = req.body;
+        let newOffer = new Models.Offer({price, image});
+        //console.log(newOffer);
+        return newOffer.save();
+      })
+      .then((offerDoc)=>{
+        offerD = offerDoc;
+        reqD.offers.push(offerDoc)
+        return reqD.save();
+      })
+      .then((doc)=>{
+        userD.offers.push(offerD);
+        return userD.save();
+      })
+      .then((doc)=>{
+        res.status(201).json(offerD);
+      })
+      .catch( err => returnError(err, res));
+  },
+
+  deleteOffer: function(req, res){
+    let user_offer = {
+      user: 0,
+      index: 0
+    };
+
+    Models.User.findById(req.params.id)
+      .then((userDoc)=>{
+        if(userDoc ===null) throw new Error("User not found");
+        let offerPos = userDoc.offers.findIndex(findDocInArray, req.params.id_offer);
+        if(offerPos === undefined) throw new Error("Offer not found in user");
+        user_offer.user = userDoc;
+        user_offer.index = offerPos;
+        return Models.Request.findById(req.params.id_request);
+      })
+      .then((requestDoc)=>{
+        if(requestDoc ===null) throw new Error("Request not found");
+        let offerPos = requestDoc.offers.findIndex(findDocInArray, req.params.id_offer);
+        if(offerPos === undefined) throw new Error("Offer not found in request");
+        requestDoc.offers.splice(offerPos, 1);
+        return requestDoc.save(); //delte offer from request
+      })
+      .then((requestDoc)=>{
+        user_offer.user.offers.splice(user_offer.index, 1);
+        return user_offer.user.save();
+      })
+      .then((userDoc)=>{ 
+        return Models.Offer.findByIdAndRemove(req.params.id_offer);
+      })
+      .then((doc)=>{
+        res.json({"deleted": true});
+      })
+      .catch( err => returnError(err, res));
   }
 
 }
 
-function findRequest(curReq, index){
-  if (curReq == this) {
-    return {"index": index}
-  }
+function findDocInArray(curReq){
+  return curReq == this;
 }
 
 

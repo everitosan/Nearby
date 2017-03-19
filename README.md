@@ -25,3 +25,9 @@ Debe crear el archivo index.js dentro de la carpeta config para realizar desarro
   }
 
 ```
+
+## TODO
+ - feat: endpoint createOfferForRequest debe aceptar imagenes [Multi-Form]
+ - fix: Agregar lat y long required a user
+ - feat: Método de búsqueda de ceracnía en createRequest
+ - feat: Método de notifiaciones de request en createRequest
