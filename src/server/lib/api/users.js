@@ -6,6 +6,9 @@ const Users = {
   allUsers : function(req, res) {
       
     Models.User.find({active: true})
+      .populate("requests")
+      .populate("offers")
+      .exec()
       .then((docs)=>{
         res.json(docs);
       })

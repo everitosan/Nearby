@@ -7,7 +7,7 @@ let Request = new mongoose.Schema({
   date: {type: Date, default: Date.now},
   finished: {type: Boolean, default: false},
   active: {type: Boolean, default: true},
-  offers: [ Schema.Types.ObjectId ],
+  offers: [ {type: Schema.Types.ObjectId, ref: "Offer"} ],
 });
 
 export default mongoose.model("Request", Request);

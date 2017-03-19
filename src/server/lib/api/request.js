@@ -4,6 +4,8 @@ import returnError from "./Error";
 const Request = {
   allRequests: function(req, res) {
     Models.Request.find({active: true})
+      .populate("offers")
+      .exec()
       .then((documents)=>{
         res.send(documents);
       })

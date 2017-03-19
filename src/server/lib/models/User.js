@@ -7,8 +7,8 @@ let UserSchema = new mongoose.Schema({
   email: {type: String, unique: true, required: true},
   picture: {type: String, required: true},
   telephone: {type: String},
-  requests: [ Schema.Types.ObjectId ],
-  offers: [ Schema.Types.ObjectId ],
+  requests: [ {type: Schema.Types.ObjectId, ref: "Request" }],
+  offers: [ {type:Schema.Types.ObjectId, ref:"Offer" }],
   active: {type: Boolean, default: true}
 });
 
