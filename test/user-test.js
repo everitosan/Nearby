@@ -23,7 +23,8 @@ describe("Users", ()=>{
       "showId": 32433724,
       "name": "abril",
       "email": "abril@abril.com",
-      "picture":"onePic"
+      "picture":"onePic",
+      "coordinates": "19.3345687,-99.1068818"
     });
     
     let eve = new User({
@@ -31,7 +32,8 @@ describe("Users", ()=>{
       "name": "everitosan",
       "email": "roockf@hotmail.com",
       "picture":"dasdasd",
-      "active": false
+      "active": false,
+      "coordinates": "19.3345687,-99.1068818"
     }); 
 
     User.remove({}, (err)=>{
@@ -60,6 +62,8 @@ describe("Users", ()=>{
           res.body.should.be.a("array");
           res.body[0].should.have.property("name");
           res.body[0].name.should.equal('abril');
+          res.body[0].should.have.property("coordinates");
+          res.body[0].coordinates.should.equal("19.3345687,-99.1068818");
           res.body.length.should.equal(1);
           done();
         })
@@ -97,7 +101,8 @@ describe("Users", ()=>{
         "showId": 6666,
         "name": "everitosan",
         "email": "everardo@hotmail.com",
-        "picture":"dasdasd"
+        "picture":"dasdasd",
+        "coordinates": "19.3345687,-99.1068818"
       };
       chai.request(server)
         .post("/api/user/")

@@ -90,7 +90,8 @@ describe("Requests", ()=>{
         "showId": 32430724,
         "name": "abril",
         "email": "abril@go.com",
-        "picture":"onePic"
+        "picture":"onePic",
+        "coordinates": "19.3345687,-99.1068818"
       });
 
       abril.save()

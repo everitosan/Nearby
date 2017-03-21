@@ -18,8 +18,8 @@ const Users = {
   },
 
   postUser: function(req, res) {
-    let {showId, name, email, picture, telephone} = req.body;
-    let userInfo = {showId, name, email, picture, telephone}; 
+    let {showId, name, email, picture, telephone, coordinates} = req.body;
+    let userInfo = {showId, name, email, picture, telephone, coordinates}; 
 
     let user = new Models.User(userInfo);
 

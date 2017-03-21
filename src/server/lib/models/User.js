@@ -9,7 +9,9 @@ let UserSchema = new mongoose.Schema({
   telephone: {type: String},
   requests: [ {type: Schema.Types.ObjectId, ref: "Request" }],
   offers: [ {type:Schema.Types.ObjectId, ref:"Offer" }],
-  active: {type: Boolean, default: true}
+  active: {type: Boolean, default: true},
+  notificationActive: {type :Boolean, default: false},
+  coordinates: {type: String, required: true }
 });
 
 
