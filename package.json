@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --timeout 10000",
+    "coverage": "istanbul cover _mocha -- test/*-test.js --compilers js:babel-core/register",
     "start": "NODE_ENV=dev nodemon src/server/lib/index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel src/server/lib -d src/server/dist --presets es2015,stage-2",
     "serve": "NODE_ENV=deploy node src/server/dist/index.js"
@@ -28,6 +29,8 @@
     "babel-preset-stage-2": "^6.22.0",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "isparta": "^4.0.0",
+    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0"
