@@ -30,4 +30,9 @@ router
   .put("/offer/:id", Offer.putOffer)
   .delete("/offer/:id", Offer.disableOffer);
 
+router
+  .get("/*", (req, res)=>{
+    res.status(404).send("404");
+  });
+
 export default router;

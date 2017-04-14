@@ -74,6 +74,21 @@ describe("Users", ()=>{
     });
   });
 
+  describe("FAIL /GET User", () => {
+    it("it should FAIL getting a user by it's ID", (done) => {
+      chai.request(server)
+        .get("/api/user/"+0)
+        .then((res)=>{
+          done();
+        })
+        .catch((err)=>{
+          err.should.have.status(400);
+          err.response.should.have.property("error");
+          done();
+        });
+    });
+  });
+
   describe("/GET a User", ()=>{
     it("should get a user by it's ID", (done)=>{
       chai.request(server)
@@ -92,6 +107,21 @@ describe("Users", ()=>{
           done(err);
         });
     });
+  });
+
+  describe("FAIL /POST a USer", () => {
+    it("i should FAIL to create a user", (done)=>{
+      chai.request(server)
+        .post("/api/user")
+        .then(res => {
+          done();
+        })
+        .catch(err => {
+          err.should.have.status(400);
+          err.response.should.have.property("error");
+          done();
+        })
+    })
   });
 
   describe("/POST a User", ()=> {
