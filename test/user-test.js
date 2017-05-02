@@ -24,7 +24,7 @@ describe("Users", ()=>{
       "name": "abril",
       "email": "abril@abril.com",
       "picture":"onePic",
-      "coordinates": "19.3345687,-99.1068818"
+      "coordinates": "19.328920, -99.112668"
     });
     
     let eve = new User({
@@ -63,7 +63,7 @@ describe("Users", ()=>{
           res.body[0].should.have.property("name");
           res.body[0].name.should.equal('abril');
           res.body[0].should.have.property("coordinates");
-          res.body[0].coordinates.should.equal("19.3345687,-99.1068818");
+          res.body[0].coordinates.should.equal("19.328920, -99.112668");
           res.body.length.should.equal(1);
           done();
         })
@@ -122,6 +122,53 @@ describe("Users", ()=>{
           done();
         })
     })
+  });
+
+  describe("/POST authUser", ()=> {
+    it("should find a user and return it", (done)=> {
+      let user = {
+        "showId": 3243724,
+        "name": "everitosan",
+        "email": "roockf@hotmail.com",
+        "picture":"dasdasd"
+      };
+      chai.request(server)
+        .post("/api/authUser")
+        .send(user)
+        .then((res)=>{
+          res.should.have.status(200);
+          res.body.should.have.property("showId");
+          res.body.showId.should.equal(3243724);
+          done();
+        })
+        .catch((err)=> done(err) );
+    });
+    it("should create a user and return it", (done)=> {
+      
+      let nUser = {
+        "showId": 3243024,
+        "name": "everitosan",
+        "email": "rockf@hotmail.com",
+        "picture":"dasedasd"
+      };
+
+      chai.request(server)
+        .post("/api/authUser")
+        .send(nUser)
+        .then((res) => {
+          res.should.have.status(201);
+          res.body.should.have.property("showId");
+          res.body.showId.should.equal(3243024);
+          res.body.should.have.property("name");
+          res.body.name.should.equal("everitosan");
+          res.body.should.have.property("email");
+          res.body.email.should.equal("rockf@hotmail.com");
+          res.body.should.have.property("picture");
+          res.body.picture.should.equal("dasedasd");
+          done();
+        })
+        .catch( (err) => done(err) );
+    });
   });
 
   describe("/POST a User", ()=> {

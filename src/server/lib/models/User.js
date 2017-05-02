@@ -11,7 +11,7 @@ let UserSchema = new mongoose.Schema({
   offers: [ {type:Schema.Types.ObjectId, ref:"Offer" }],
   active: {type: Boolean, default: true},
   notificationActive: {type :Boolean, default: false},
-  coordinates: {type: String, required: true }
+  coordinates: {type: String, required: false }
 });
 
 

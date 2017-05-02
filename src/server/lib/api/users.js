@@ -17,20 +17,23 @@ const Users = {
       });
   },
 
-  postUser: function(req, res) {
-    let {showId, name, email, picture, telephone, coordinates} = req.body;
-    let userInfo = {showId, name, email, picture, telephone, coordinates}; 
-
-    let user = new Models.User(userInfo);
-
-    user.save()
+  authUser: (req, res) =>{
+    let {showId} = req.body;
+    Models.User.findOne({"showId": showId})
       .then((doc)=>{
-        res.status(201).json(doc);
+        if(doc != null) {
+          res.status(200).json(doc);
+        } else {
+          createUser(req, res);
+        }
       })
       .catch((err)=>{
         returnError(err, res);
       });
+  },
 
+  postUser: function(req, res) {
+    createUser(req, res);
   },
   
   getUser: function(req, res) {
@@ -215,6 +218,21 @@ const Users = {
 
 function findDocInArray(curReq){
   return curReq == this;
+}
+
+function createUser(req, res) {
+  let {showId, name, email, picture, telephone, coordinates} = req.body;
+  let userInfo = {showId, name, email, picture, telephone, coordinates}; 
+
+  let user = new Models.User(userInfo);
+
+  user.save()
+    .then((doc)=>{
+      res.status(201).json(doc);
+    })
+    .catch((err)=>{
+      returnError(err, res);
+    });
 }
 
 
