@@ -97,6 +97,7 @@ describe("Users", ()=>{
           
           res.should.have.status(200);
           res.should.be.a("object");
+          res.body.should.have.property("premium");
           res.body.name.should.equal("abril");
           res.body.email.should.equal("abril@abril.com");
           res.body.picture.should.equal("onePic");
@@ -157,6 +158,7 @@ describe("Users", ()=>{
         .send(nUser)
         .then((res) => {
           res.should.have.status(201);
+          res.body.should.have.property("_id");
           res.body.should.have.property("showId");
           res.body.showId.should.equal(3243024);
           res.body.should.have.property("name");
